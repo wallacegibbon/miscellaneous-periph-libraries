@@ -9,7 +9,6 @@
 	.endm
 
 _start:
-	.option norvc
 	j handle_reset
 	.word 0
 	IRQ NMI_Handler
@@ -57,8 +56,6 @@ default_interrupt_handler:
 	/*
 	mret
 	*/
-
-	.option rvc
 
 	.section .text.handle_reset, "ax", @progbits
 	.weak handle_reset

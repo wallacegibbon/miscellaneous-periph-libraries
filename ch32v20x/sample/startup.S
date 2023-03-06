@@ -28,7 +28,7 @@ _start:
 	.align 1
 
 _vector_base:
-	.option norvc;
+	.option norvc
 	.word _start
 	.word 0
 	IRQ NMI_Handler
@@ -108,7 +108,7 @@ default_interrupt_handler:
 	mret
 	*/
 
-	.option rvc;
+	.option rvc
 
 	.section .text.handle_reset, "ax", @progbits
 	.weak handle_reset
