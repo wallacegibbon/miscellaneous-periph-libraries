@@ -12,8 +12,8 @@ _start:
 	.option norvc
 	j handle_reset
 	.word 0
-	.word NMI_Handler
-	.word HardFault_Handler
+	IRQ NMI_Handler
+	IRQ HardFault_Handler
 	.word 0
 	.word 0
 	.word 0

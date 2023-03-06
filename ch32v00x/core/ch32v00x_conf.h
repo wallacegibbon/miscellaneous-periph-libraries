@@ -8,7 +8,6 @@
 #include <ch32v00x_flash.h>
 #include <ch32v00x_gpio.h>
 #include <ch32v00x_i2c.h>
-#include <ch32v00x_it.h>
 #include <ch32v00x_iwdg.h>
 #include <ch32v00x_misc.h>
 #include <ch32v00x_pwr.h>
