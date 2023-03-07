@@ -8,28 +8,14 @@
 	j \handler
 	.endm
 
-_start:
-	j handle_reset
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00100073
-
 	.section .vector, "ax", @progbits
 	.align 1
-
-_vector_base:
 	.option norvc
-	j _start
+
+_start:
+_vector_base:
+	/* vector table overlaps reset address to save memory */
+	j handle_reset
 	.word 0
 	IRQ NMI_Handler
 	IRQ HardFault_Handler
@@ -92,17 +78,18 @@ _vector_base:
 	IRQ USBHD_IRQHandler
 
 	.section .text.default_interrupt_handler, "ax", @progbits
+
 default_interrupt_handler:
 	j default_interrupt_handler
 	/*
 	mret
 	*/
 
-	.option rvc
-
 	.section .text.handle_reset, "ax", @progbits
 	.weak handle_reset
 	.align 1
+	.option rvc
+
 handle_reset:
 	.option push
 	.option norelax
@@ -123,7 +110,7 @@ handle_reset:
 	addi a1, a1, 4
 	bltu a1, a2, 1b
 2:
-	/* clear bss section */
+	/* Clear bss section */
 	la a0, _sbss
 	la a1, _ebss
 	bgeu a0, a1, 2f
@@ -132,9 +119,10 @@ handle_reset:
 	addi a0, a0, 4
 	bltu a0, a1, 1b
 2:
-	/* enable all interrupt */
+	/* Enable all interrupt */
 	li t0, 0x88
 	csrs mstatus, t0
+
 	la t0, _vector_base
 	ori t0, t0, 1
 	csrw mtvec, t0

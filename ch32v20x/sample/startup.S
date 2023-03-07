@@ -8,28 +8,14 @@
 	.set \handler, default_interrupt_handler
 	.endm
 
-_start:
-	j handle_reset
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00000013
-	.word 0x00100073
-
 	.section .vector, "ax", @progbits
 	.align 1
-
-_vector_base:
 	.option norvc
-	.word _start
+
+_start:
+_vector_base:
+	/* vector table overlaps reset address to save memory */
+	j handle_reset
 	.word 0
 	IRQ NMI_Handler
 	IRQ HardFault_Handler
@@ -102,17 +88,19 @@ _vector_base:
 	IRQ OSCWakeUp_IRQHandler
 
 	.section .text.default_interrupt_handler, "ax", @progbits
+
 default_interrupt_handler:
 	j default_interrupt_handler
 	/*
 	mret
 	*/
 
-	.option rvc
-
 	.section .text.handle_reset, "ax", @progbits
+
 	.weak handle_reset
 	.align 1
+	.option rvc
+
 handle_reset:
 	.option push 
 	.option norelax 
