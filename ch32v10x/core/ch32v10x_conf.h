@@ -18,8 +18,6 @@
 #include "ch32v10x_tim.h"
 #include "ch32v10x_usart.h"
 #include "ch32v10x_wwdg.h"
-#include "ch32v10x_usb.h"
-#include "ch32v10x_usb_host.h"
 #include "ch32v10x_misc.h"
 
 #endif
