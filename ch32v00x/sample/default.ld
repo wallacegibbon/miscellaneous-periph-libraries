@@ -10,18 +10,15 @@ MEMORY {
 }
 
 SECTIONS {
-	.init : {
-		_sinit = .;
-		. = ALIGN(4);
-		KEEP(*(SORT_NONE(.init)))
-		. = ALIGN(4);
-		_einit = .;
+	.isr_vector : {
+		KEEP(*(SORT_NONE(.isr_vector)))
 	} >FLASH AT>FLASH
 
 	.text : {
 		. = ALIGN(4);
-		*(.text .text.*)
 		*(.rodata .rodata*)
+		*(.srodata .srodata.*)
+		*(.text .text.*)
 		. = ALIGN(4);
 	} >FLASH AT>FLASH
 
@@ -42,8 +39,7 @@ SECTIONS {
 		*(.data .data.*)
 		. = ALIGN(8);
 		PROVIDE(__global_pointer$ = . + 0x800);
-		*(.sdata .sdata.*)
-		*(.sdata2*)
+		*(.sdata .sdata.* .sdata2.*)
 		. = ALIGN(8);
 		*(.srodata.cst16)
 		*(.srodata.cst8)

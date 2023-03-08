@@ -1,15 +1,11 @@
-	.section .init, "ax", @progbits
-	.global _start
-	.align 1
-
 	.macro IRQ handler
 	.weak \handler
 	.set \handler, default_interrupt_handler
 	j \handler
 	.endm
 
-	.section .vector, "ax", @progbits
-	.align 1
+	.section .isr_vector, "ax", @progbits
+	.global _start
 	.option norvc
 
 _start:

@@ -1,12 +1,11 @@
-	.section .init, "ax", @progbits
-	.global _start
-	.align 2
-
 	.macro IRQ handler
 	.word \handler
 	.weak \handler
 	.set \handler, default_interrupt_handler
 	.endm
+
+	.section .isr_vector, "ax", @progbits
+	.global _start
 
 _start:
 _vector_base:
