@@ -98,12 +98,12 @@ default_interrupt_handler:
 	.option rvc
 
 handle_reset:
-	.option push 
-	.option norelax 
+	.option push
+	.option norelax
 	la gp, __global_pointer$
-	.option pop 
+	.option pop
 1:
-	la sp, _eusrstack 
+	la sp, _eusrstack
 2:
 	/* Load data section from flash to RAM */
 	la a0, _data_lma
@@ -134,11 +134,11 @@ handle_reset:
 	csrw 0x804, t0
 
 	/* Enable interrupt */
- 	li t0, 0x88 
- 	csrs mstatus, t0
+	li t0, 0x88
+	csrs mstatus, t0
 
- 	la t0, _vector_base
-	ori t0, t0, 3 
+	la t0, _vector_base
+	ori t0, t0, 3
 	csrw mtvec, t0
 
 	jal SystemInit

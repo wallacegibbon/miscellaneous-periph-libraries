@@ -168,10 +168,10 @@ handle_reset:
 	csrw 0x804, t0
 
 	/* Enable floating point and interrupt */
- 	li t0, 0x6088
- 	csrs mstatus, t0
+	li t0, 0x6088
+	csrs mstatus, t0
 
- 	la t0, _vector_base
+	la t0, _vector_base
 	ori t0, t0, 3
 	csrw mtvec, t0
 

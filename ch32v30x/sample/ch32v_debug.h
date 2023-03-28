@@ -13,5 +13,5 @@
 
 void USART_printf_initialize(uint32_t baudrate);
 
-#endif 
+#endif
 
