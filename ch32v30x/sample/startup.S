@@ -70,7 +70,7 @@ _vector_base:
 	IRQ USART3_IRQHandler
 	IRQ EXTI15_10_IRQHandler
 	IRQ RTCAlarm_IRQHandler
-	.word 0
+	IRQ USBWakeUp_IRQHandler
 	IRQ TIM8_BRK_IRQHandler
 	IRQ TIM8_UP_IRQHandler
 	IRQ TIM8_TRG_COM_IRQHandler
@@ -89,16 +89,16 @@ _vector_base:
 	IRQ DMA2_Channel3_IRQHandler
 	IRQ DMA2_Channel4_IRQHandler
 	IRQ DMA2_Channel5_IRQHandler
-	.word 0
-	.word 0
-	.word 0
-	.word 0
-	.word 0
-	.word 0
+	IRQ ETH_IRQHandler
+	IRQ ETH_WKUP_IRQHandler
+	IRQ CAN2_TX_IRQHandler
+	IRQ CAN2_RX0_IRQHandler
+	IRQ CAN2_RX1_IRQHandler
+	IRQ CAN2_SCE_IRQHandler
 	IRQ OTG_FS_IRQHandler
-	.word 0
-	.word 0
-	.word 0
+	IRQ USBHSWakeup_IRQHandler
+	IRQ USBHS_IRQHandler
+	IRQ DVP_IRQHandler
 	IRQ UART6_IRQHandler
 	IRQ UART7_IRQHandler
 	IRQ UART8_IRQHandler
