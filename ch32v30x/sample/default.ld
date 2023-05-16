@@ -5,8 +5,16 @@ __stack_size = 2048;
 PROVIDE(_stack_size = __stack_size);
 
 MEMORY {
-	FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 128K
-	RAM (xrw)  : ORIGIN = 0x20000000, LENGTH = 32K
+	/* CH32V307 */
+	/*
+	FLASH + RAM supports the following configurations:
+	FLASH-192K + RAM-128K
+	FLASH-224K + RAM-96K
+	FLASH-256K + RAM-64K
+	FLASH-288K + RAM-32K
+	*/
+	FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 192K
+	RAM (xrw)  : ORIGIN = 0x20000000, LENGTH = 128K
 }
 
 SECTIONS {
