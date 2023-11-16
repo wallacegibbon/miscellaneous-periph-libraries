@@ -4,15 +4,15 @@
 static volatile uint32_t millis_count = 0;
 
 void initialize_systick_interrupt() {
-	NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef nvic_init;
 	uint32_t increment_per_milli;
 
-	NVIC_InitStructure.NVIC_IRQChannel = SysTick_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	nvic_init.NVIC_IRQChannel = SysTick_IRQn;
+	nvic_init.NVIC_IRQChannelPreemptionPriority = 0;
+	nvic_init.NVIC_IRQChannelSubPriority = 0;
+	nvic_init.NVIC_IRQChannelCmd = ENABLE;
 
-	NVIC_Init(&NVIC_InitStructure);
+	NVIC_Init(&nvic_init);
 
 	increment_per_milli = SystemCoreClock / 8000;
 
@@ -39,8 +39,8 @@ void initialize_systick_interrupt() {
 
 uint32_t micros() {
 	uint32_t cnt, cmp;
-	cnt = *((uint32_t *) &SysTick->CNTL0);
-	cmp = *((uint32_t *) &SysTick->CMPLR0);
+	cnt = *((uint32_t *)&SysTick->CNTL0);
+	cmp = *((uint32_t *)&SysTick->CMPLR0);
 	return millis_count * 1000 + cnt * 1000 / cmp;
 }
 
@@ -51,21 +51,21 @@ uint32_t millis() {
 void delay_us(uint32_t micro_seconds) {
 	uint32_t prev_micros;
 	prev_micros = micros();
-	while (micros() - prev_micros < micro_seconds);
+	while (micros() - prev_micros < micro_seconds)
+		;
 }
 
 void delay_ms(uint32_t milli_seconds) {
 	uint32_t prev_millis;
 	prev_millis = millis();
-	while (millis() - prev_millis < milli_seconds);
+	while (millis() - prev_millis < milli_seconds)
+		;
 }
 
-__attribute__((interrupt("WCH-Interrupt-fast")))
-void SysTick_Handler() {
+__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler() {
 	millis_count++;
 	SysTick->CNTL0 = 0;
 	SysTick->CNTL1 = 0;
 	SysTick->CNTL2 = 0;
 	SysTick->CNTL3 = 0;
 }
-

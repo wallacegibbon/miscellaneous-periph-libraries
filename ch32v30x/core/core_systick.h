@@ -12,4 +12,3 @@ void delay_us(uint32_t micro_seconds);
 void delay_ms(uint32_t milli_seconds);
 
 #endif
-

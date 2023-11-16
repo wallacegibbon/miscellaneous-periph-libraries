@@ -14,6 +14,7 @@
 #include "ch32v30x_gpio.h"
 #include "ch32v30x_i2c.h"
 #include "ch32v30x_iwdg.h"
+#include "ch32v30x_misc.h"
 #include "ch32v30x_pwr.h"
 #include "ch32v30x_rcc.h"
 #include "ch32v30x_rtc.h"
@@ -22,7 +23,5 @@
 #include "ch32v30x_tim.h"
 #include "ch32v30x_usart.h"
 #include "ch32v30x_wwdg.h"
-#include "ch32v30x_misc.h"
 
 #endif
-

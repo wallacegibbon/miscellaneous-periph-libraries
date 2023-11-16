@@ -4,15 +4,15 @@
 static volatile uint32_t millis_count = 0;
 
 void initialize_systick_interrupt() {
-	NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef nvic_init;
 	uint32_t increment_per_milli;
 
-	NVIC_InitStructure.NVIC_IRQChannel = SysTick_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	nvic_init.NVIC_IRQChannel = SysTick_IRQn;
+	nvic_init.NVIC_IRQChannelPreemptionPriority = 0;
+	nvic_init.NVIC_IRQChannelSubPriority = 0;
+	nvic_init.NVIC_IRQChannelCmd = ENABLE;
 
-	NVIC_Init(&NVIC_InitStructure);
+	NVIC_Init(&nvic_init);
 
 	increment_per_milli = SystemCoreClock / 8000;
 
@@ -34,18 +34,18 @@ uint32_t millis() {
 void delay_us(uint32_t micro_seconds) {
 	uint32_t prev_micros;
 	prev_micros = micros();
-	while (micros() - prev_micros < micro_seconds);
+	while (micros() - prev_micros < micro_seconds)
+		;
 }
 
 void delay_ms(uint32_t milli_seconds) {
 	uint32_t prev_millis;
 	prev_millis = millis();
-	while (millis() - prev_millis < milli_seconds);
+	while (millis() - prev_millis < milli_seconds)
+		;
 }
 
-__attribute__((interrupt("WCH-Interrupt-fast")))
-void SysTick_Handler() {
+__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler() {
 	SysTick->SR = 0;
 	millis_count++;
 }
-
