@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-void initialize_systick_interrupt();
+void systick_interrupt_init();
 
 uint32_t micros();
 uint32_t millis();

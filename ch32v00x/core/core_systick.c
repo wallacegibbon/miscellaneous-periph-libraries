@@ -3,7 +3,7 @@
 
 static volatile uint32_t millis_count = 0;
 
-void initialize_systick_interrupt() {
+void systick_interrupt_init() {
 	NVIC_InitTypeDef nvic_init;
 	uint32_t increment_per_milli;
 
