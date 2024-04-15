@@ -1,6 +1,8 @@
 #include "core_systick.h"
 #include <ch32v10x.h>
 
+void SysTick_Handler() __attribute__((interrupt("WCH-Interrupt-fast")));
+
 static volatile uint32_t millis_count = 0;
 
 void systick_interrupt_init() {
@@ -62,10 +64,10 @@ void delay_ms(uint32_t milli_seconds) {
 		;
 }
 
-__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler() {
-	millis_count++;
+void SysTick_Handler() {
 	SysTick->CNTL0 = 0;
 	SysTick->CNTL1 = 0;
 	SysTick->CNTL2 = 0;
 	SysTick->CNTL3 = 0;
+	millis_count++;
 }
