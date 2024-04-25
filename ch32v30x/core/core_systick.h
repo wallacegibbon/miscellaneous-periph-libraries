@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-void systick_interrupt_init();
+int systick_interrupt_init();
 
 uint32_t micros();
 uint32_t millis();
 
-void delay_us(uint32_t micro_seconds);
-void delay_ms(uint32_t milli_seconds);
+int delay_us(uint32_t micro_seconds);
+int delay_ms(uint32_t milli_seconds);
 
 #endif

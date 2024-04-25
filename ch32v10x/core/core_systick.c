@@ -5,7 +5,7 @@ void SysTick_Handler() __attribute__((interrupt("WCH-Interrupt-fast")));
 
 static volatile uint32_t millis_count = 0;
 
-void systick_interrupt_init() {
+int systick_interrupt_init() {
 	NVIC_InitTypeDef nvic_init;
 	uint32_t increment_per_milli;
 
@@ -37,6 +37,7 @@ void systick_interrupt_init() {
 	SysTick->CMPHR3 = 0;
 
 	SysTick->CTLR = 1;
+	return 0;
 }
 
 uint32_t micros() {
@@ -50,18 +51,20 @@ uint32_t millis() {
 	return millis_count;
 }
 
-void delay_us(uint32_t micro_seconds) {
+int delay_us(uint32_t micro_seconds) {
 	uint32_t prev_micros;
 	prev_micros = micros();
 	while (micros() - prev_micros < micro_seconds)
 		;
+	return 0;
 }
 
-void delay_ms(uint32_t milli_seconds) {
+int delay_ms(uint32_t milli_seconds) {
 	uint32_t prev_millis;
 	prev_millis = millis();
 	while (millis() - prev_millis < milli_seconds)
 		;
+	return 0;
 }
 
 void SysTick_Handler() {

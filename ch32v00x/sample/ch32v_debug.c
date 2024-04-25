@@ -1,7 +1,8 @@
-#include <ch32v_debug.h>
 #include <ch32v00x.h>
+#include <ch32v_debug.h>
 
-void usart_printf_initialize(uint32_t baudrate) {
+int usart_printf_initialize(unsigned long baudrate)
+{
 	GPIO_InitTypeDef gpio_init;
 	USART_InitTypeDef usart_init;
 
@@ -21,21 +22,24 @@ void usart_printf_initialize(uint32_t baudrate) {
 
 	USART_Init(USART1, &usart_init);
 	USART_Cmd(USART1, ENABLE);
+	return 0;
 }
 
-__attribute__((used))
-int _write(int fd, char *buf, int size) {
-	int i;
+int _write(int fd, char *buf, int size) __attribute__((used));
 
+int _write(int fd, char *buf, int size)
+{
+	int i;
 	for (i = 0; i < size; i++) {
-		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET)
+			;
 		USART_SendData(USART1, *buf++);
 	}
-
 	return size;
 }
 
-void *_sbrk(ptrdiff_t incr) {
+void *_sbrk(ptrdiff_t incr)
+{
 	extern char _end[];
 	extern char _heap_end[];
 	static char *curbrk = _end;
@@ -46,4 +50,3 @@ void *_sbrk(ptrdiff_t incr) {
 	curbrk += incr;
 	return curbrk - incr;
 }
-

@@ -11,13 +11,12 @@
 #define DEBUG DEBUG_UART1
 #endif
 
-void usart_printf_initialize(uint32_t baudrate);
+int usart_printf_initialize(unsigned long baudrate);
 
-#if(DEBUG)
+#if (DEBUG)
 #define PRINT(format, ...) printf(format, ##__VA_ARGS__)
 #else
 #define PRINT(X...)
 #endif
-
 
 #endif
