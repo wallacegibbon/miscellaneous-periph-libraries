@@ -1,11 +1,11 @@
 #include "core_systick.h"
 #include <ch32v00x.h>
 
-void SysTick_Handler() __attribute__((interrupt("WCH-Interrupt-fast")));
+void SysTick_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 static volatile uint32_t millis_count = 0;
 
-int systick_interrupt_init()
+int systick_interrupt_init(void)
 {
 	NVIC_InitTypeDef nvic_init;
 	uint32_t increment_per_milli;
@@ -27,12 +27,12 @@ int systick_interrupt_init()
 	return 0;
 }
 
-uint32_t micros()
+uint32_t micros(void)
 {
 	return millis_count * 1000 + SysTick->CNT * 1000 / SysTick->CMP;
 }
 
-uint32_t millis()
+uint32_t millis(void)
 {
 	return millis_count;
 }
@@ -55,7 +55,7 @@ int delay_ms(uint32_t milli_seconds)
 	return 0;
 }
 
-void SysTick_Handler()
+void SysTick_Handler(void)
 {
 	SysTick->SR = 0;
 	millis_count++;
